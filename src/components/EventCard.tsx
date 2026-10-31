@@ -1,12 +1,10 @@
-import Link from "next/link";
-import {
-  CATEGORY_META,
-  daysUntil,
+import { CATEGORY_META,
   formatDate,
   formatTime,
-  type SocialEvent,
-} from "@/lib/events";
-
+  type SocialEvent } from "@/lib/events";
+import Link from "next/link";
+import DaysUntilChip from "./DaysUntilChip";
+ 
 export function EventCard({ event }: { event: SocialEvent }) {
   const meta = CATEGORY_META[event.category];
   const spotsLeft = event.capacity - event.joined;
@@ -37,7 +35,10 @@ export function EventCard({ event }: { event: SocialEvent }) {
         )}
 
         <span className="absolute bottom-3 left-3 rounded-full bg-background/85 px-2.5 py-0.5 text-xs font-medium text-foreground backdrop-blur-sm">
-          {daysUntil(event.date)}
+          <DaysUntilChip
+            date={event.date}
+            className="absolute bottom-3 left-3 rounded-full bg-background/85 px-2.5 py-0.5 text-xs font-medium text-foreground backdrop-blur-sm"
+            />
         </span>
       </div>
 

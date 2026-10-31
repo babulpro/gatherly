@@ -33,7 +33,7 @@ export default function CreateEventPage() {
     summary: f.summary || "A short one-line summary of your event.",
     description: f.description,
     category: f.category,
-    date: f.date ? new Date(`${f.date}T${f.time}`).toISOString() : new Date().toISOString(),
+    date: f.date ? new Date(`${f.date}T${f.time || "09:00"}`).toISOString() : "",
     durationHours: Number(f.durationHours) || 1,
     location: {
       name: f.locationName || "Venue name",

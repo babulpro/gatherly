@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut, useSession } from "@/lib/auth-client";
+import { LogoMark, LogoWordmark } from "./logo";
 
 const NAV_LINKS = [
   { href: "/events", label: "Events" },
@@ -63,15 +64,11 @@ export default function TopNavbar() {
     <nav className="fixed inset-x-0 top-0 z-50 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
       <header className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-6">
         {/* Brand */}
-        <Link
-          href="/"
-          className="flex shrink-0 items-center gap-2.5 font-bold text-foreground"
-          aria-label="Bazar Dor home"
-        >
-          <div className="grid h-8 w-16 place-items-center rounded-lg bg-[#043117] text-xs font-bold tracking-wide text-white">
-            babul
-          </div>
-        
+        <Link href="/" className="flex items-center gap-2">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-[#043117] text-white">
+            <LogoMark className="h-5 w-5" />
+          </span>
+          <LogoWordmark className="text-lg text-foreground" />
         </Link>
 
         {/* Desktop nav */}
