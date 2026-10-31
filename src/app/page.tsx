@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CATEGORIES, CATEGORY_META, EVENTS } from "@/lib/events";
 import { EventCard } from "@/components/EventCard";
 import { HeroSearch } from "@/components/HeroSearch";
@@ -17,58 +18,124 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 pb-24">
-      {/* HERO */}
-      <section className="relative -mx-6 overflow-hidden border-b border-separator px-6 py-20">
+      {/* ==================== HERO ==================== */}
+      <section className="relative -mx-6 overflow-hidden border-b border-separator px-6 pb-20 pt-16 lg:pb-24 lg:pt-20">
+        {/* Ambient decorations */}
         <div className="pointer-events-none absolute -left-24 -top-24 h-72 w-72 rounded-full bg-primary/15 blur-3xl" />
         <div className="pointer-events-none absolute -right-16 top-10 h-56 w-56 rounded-full bg-emerald-400/15 blur-3xl" />
 
-        <div className="relative mx-auto max-w-2xl text-center">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-            Community-powered social impact
-          </span>
+        <div className="relative mx-auto max-w-5xl">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
+            {/* ---------- LEFT: copy ---------- */}
+            <div className="text-center lg:text-left">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+                </span>
+                Community-powered social impact
+              </span>
 
-          <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-foreground sm:text-5xl">
-            Small acts.{" "}
-            <span className="text-primary">Big local impact.</span>
-          </h1>
+              <h1 className="mt-5 text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl lg:text-[3.25rem]">
+                Small acts.{" "}
+                <span className="bg-gradient-to-r from-primary via-emerald-600 to-emerald-500 bg-clip-text text-transparent">
+                  Big local impact.
+                </span>
+              </h1>
 
-          <p className="mx-auto mt-4 max-w-lg text-base text-default-500">
-            Discover social service events near you — cleanups, food drives,
-            mentoring and more. Join a cause, meet neighbors, and make your city
-            a little better.
-          </p>
+              <p className="mx-auto mt-4 max-w-lg text-base leading-relaxed text-default-500 lg:mx-0">
+                Discover social service events near you — cleanups, food drives,
+                mentoring and more. Join a cause, meet neighbors, and make your
+                city a little better.
+              </p>
 
-          <div className="mt-8 flex justify-center">
-            <HeroSearch />
+              <div className="mt-7 flex justify-center lg:justify-start">
+                <HeroSearch />
+              </div>
+
+              <div className="mt-5 flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm lg:justify-start">
+                <span className="text-default-400">Popular:</span>
+                {CATEGORIES.slice(0, 4).map((c) => (
+                  <Link
+                    key={c}
+                    href={`/events?category=${c}`}
+                    className="rounded-full border border-separator px-2.5 py-0.5 text-default-600 transition hover:border-primary/40 hover:text-primary"
+                  >
+                    {CATEGORY_META[c].emoji} {CATEGORY_META[c].label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* ---------- RIGHT: image ---------- */}
+            <div className="relative mx-auto w-full max-w-sm lg:max-w-none">
+              {/* Soft glow behind card */}
+              <div
+                aria-hidden
+                className="absolute -inset-3 rounded-[2rem] bg-gradient-to-tr from-primary/25 via-emerald-400/15 to-transparent blur-2xl"
+              />
+
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.75rem] bg-default-200 shadow-2xl shadow-primary/10 ring-1 ring-black/5 dark:ring-white/10">
+                <Image
+                  // Swap with your own: src="/hero.jpg"
+                  src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?q=80&w=1200&auto=format&fit=crop"
+                  alt="Volunteers joining hands at a community event"
+                  fill
+                  priority
+                  sizes="(max-width: 1024px) 90vw, 480px"
+                  className="object-cover"
+                />
+
+                {/* Gradient for legibility */}
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent" />
+
+                {/* Floating: live join counter */}
+                <div className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-3 py-1.5 text-[11px] font-medium text-slate-800 shadow-md backdrop-blur">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                  </span>
+                  18 people joined today
+                </div>
+
+                {/* Floating: featured event preview */}
+                <div className="absolute inset-x-3 bottom-3 rounded-xl bg-white/95 p-3 shadow-xl backdrop-blur sm:inset-x-4 sm:bottom-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-emerald-100 text-base">
+                      🌿
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate text-xs font-semibold text-slate-900">
+                        City Park Cleanup Drive
+                      </p>
+                      <p className="truncate text-[11px] text-slate-500">
+                        Sat, Nov 2 · 42 volunteers
+                      </p>
+                    </div>
+                    <span className="shrink-0 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-semibold text-emerald-700">
+                      Featured
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap justify-center gap-x-3 gap-y-2 text-sm">
-            <span className="text-default-400">Popular:</span>
-            {CATEGORIES.slice(0, 4).map((c) => (
-              <Link
-                key={c}
-                href={`/events?category=${c}`}
-                className="rounded-full border border-separator px-2.5 py-0.5 text-default-600 transition hover:border-primary/40 hover:text-primary"
-              >
-                {CATEGORY_META[c].emoji} {CATEGORY_META[c].label}
-              </Link>
+          {/* Stats strip */}
+          <div className="mx-auto mt-14 grid max-w-2xl grid-cols-3 divide-x divide-separator rounded-2xl border border-separator bg-background/60 backdrop-blur">
+            {STATS.map((s) => (
+              <div key={s.label} className="px-3 py-5 text-center">
+                <div className="text-2xl font-bold text-foreground">{s.value}</div>
+                <div className="mt-0.5 text-[11px] text-default-500 sm:text-xs">
+                  {s.label}
+                </div>
+              </div>
             ))}
           </div>
         </div>
-
-        {/* Stats */}
-        <div className="mx-auto mt-14 grid max-w-2xl grid-cols-3 divide-x divide-separator rounded-2xl border border-separator bg-background/60 backdrop-blur">
-          {STATS.map((s) => (
-            <div key={s.label} className="px-4 py-5 text-center">
-              <div className="text-2xl font-bold text-foreground">{s.value}</div>
-              <div className="mt-0.5 text-xs text-default-500">{s.label}</div>
-            </div>
-          ))}
-        </div>
       </section>
 
-      {/* CATEGORIES */}
+      {/* ==================== CATEGORIES ==================== */}
       <section className="mt-14">
         <div className="mb-5 flex items-end justify-between">
           <div>
@@ -94,7 +161,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FEATURED */}
+      {/* ==================== FEATURED ==================== */}
       {featured.length > 0 && (
         <section className="mt-14">
           <div className="mb-5 flex items-end justify-between">
@@ -111,7 +178,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {/* UPCOMING */}
+      {/* ==================== UPCOMING ==================== */}
       <section className="mt-14">
         <div className="mb-5 flex items-end justify-between">
           <div>
@@ -129,11 +196,9 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* HOW IT WORKS */}
+      {/* ==================== HOW IT WORKS ==================== */}
       <section className="mt-20">
-        <h2 className="text-center text-xl font-bold text-foreground">
-          How it works
-        </h2>
+        <h2 className="text-center text-xl font-bold text-foreground">How it works</h2>
         <div className="mt-8 grid gap-5 sm:grid-cols-3">
           {[
             { n: "01", t: "Discover", d: "Browse events by cause, city or date. Filter to what fits your schedule." },
@@ -149,14 +214,11 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="mt-20 overflow-hidden rounded-3xl border border-primary/20 bg-linear-to-br from-primary/15 via-primary/5 to-transparent p-10 text-center">
-        <h2 className="text-2xl font-bold text-foreground">
-          Have a cause in mind?
-        </h2>
+      {/* ==================== CTA ==================== */}
+      <section className="mt-20 overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/15 via-primary/5 to-transparent p-10 text-center">
+        <h2 className="text-2xl font-bold text-foreground">Have a cause in mind?</h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-default-500">
-          Create an event in minutes and rally your neighbors around something
-          that matters.
+          Create an event in minutes and rally your neighbors around something that matters.
         </p>
         <Link
           href="/events/create"
