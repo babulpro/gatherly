@@ -14,6 +14,8 @@ import {
   getEvent,
 } from "@/lib/events";
 import DaysUntilChip from "@/components/DaysUntilChip";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 /* ---------- Pre-render every known event ---------- */
 export function generateStaticParams() {
@@ -67,6 +69,13 @@ export default async function EventDetailPage({
   const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
     `${event.location.name}, ${event.location.city}`
   )}`;
+
+  const jwttoken = await auth.api.getToken({
+    headers:await headers()
+  })
+
+  console.log(jwttoken.token)
+
 
   return (
     <div className="mx-auto max-w-5xl px-6 pb-28 pt-10 lg:pb-10">
